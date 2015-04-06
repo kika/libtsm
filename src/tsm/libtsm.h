@@ -292,6 +292,25 @@ enum tsm_vte_modifier {
 /* keep in sync with TSM_INPUT_INVALID */
 #define TSM_VTE_INVALID 0xffffffff
 
+/* terminal flags */
+#define TSM_VTE_CURSOR_KEY_MODE			0x00000001 /* DEC cursor key mode */
+#define TSM_VTE_KEYPAD_APPLICATION_MODE		0x00000002 /* DEC keypad application mode; TODO: toggle on numlock? */
+#define TSM_VTE_LINE_FEED_NEW_LINE_MODE		0x00000004 /* DEC line-feed/new-line mode */
+#define TSM_VTE_8BIT_MODE				0x00000008 /* Disable UTF-8 mode and enable 8bit compatible mode */
+#define TSM_VTE_7BIT_MODE				0x00000010 /* Disable 8bit mode and use 7bit compatible mode */
+#define TSM_VTE_USE_C1				0x00000020 /* Explicitly use 8bit C1 codes; TODO: implement */
+#define TSM_VTE_KEYBOARD_ACTION_MODE		0x00000040 /* Disable keyboard; TODO: implement? */
+#define TSM_VTE_INSERT_REPLACE_MODE		0x00000080 /* Enable insert mode */
+#define TSM_VTE_SEND_RECEIVE_MODE			0x00000100 /* Disable local echo */
+#define TSM_VTE_TEXT_CURSOR_MODE			0x00000200 /* Show cursor */
+#define TSM_VTE_INVERSE_SCREEN_MODE		0x00000400 /* Inverse colors */
+#define TSM_VTE_ORIGIN_MODE			0x00000800 /* Relative origin for cursor */
+#define TSM_VTE_AUTO_WRAP_MODE			0x00001000 /* Auto line wrap mode */
+#define TSM_VTE_AUTO_REPEAT_MODE			0x00002000 /* Auto repeat key press; TODO: implement */
+#define TSM_VTE_NATIONAL_CHARSET_MODE		0x00004000 /* Send keys from nation charsets; TODO: implement */
+#define TSM_VTE_BACKGROUND_COLOR_ERASE_MODE	0x00008000 /* Set background color on erase (bce) */
+#define TSM_VTE_PREPEND_ESCAPE			0x00010000 /* Prepend escape character to next output */
+#define TSM_VTE_TITE_INHIBIT_MODE			0x00020000 /* Prevent switching to alternate screen buffer */
 typedef void (*tsm_vte_write_cb) (struct tsm_vte *vte,
 				  const char *u8,
 				  size_t len,
@@ -313,6 +332,7 @@ bool tsm_vte_handle_keyboard(struct tsm_vte *vte, uint32_t keysym,
 			     uint32_t ascii, unsigned int mods,
 			     uint32_t unicode);
 
+void tsm_vte_set_reset_flag(struct tsm_vte *vte, bool set, unsigned int flag);
 /** @} */
 
 #ifdef __cplusplus
